@@ -21,6 +21,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -66,6 +67,7 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
     private static final String FINGERPRINT_VIB = "fingerprint_success_vib";
 
     private SystemSettingListPreference mBatteryTempUnit;
+    private FingerprintManager mFingerprintManager;
     private SwitchPreference mFingerprintVib;
 
     @Override
@@ -85,10 +87,15 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
         mBatteryTempUnit.setSummary(mBatteryTempUnit.getEntry());
         mBatteryTempUnit.setOnPreferenceChangeListener(this);
 
+        mFingerprintManager = (FingerprintManager) getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
         mFingerprintVib = (SwitchPreference) findPreference(FINGERPRINT_VIB);
+        if (!mFingerprintManager.isHardwareDetected()){
+            prefScreen.removePreference(mFingerprintVib);
+        } else {
         mFingerprintVib.setChecked((Settings.System.getInt(getContentResolver(),
                 Settings.System.FINGERPRINT_SUCCESS_VIB, 1) == 1));
         mFingerprintVib.setOnPreferenceChangeListener(this);
+        }
     }
 
     @Override
