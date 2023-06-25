@@ -31,12 +31,6 @@
             android:summary="@string/fprint_sucess_vib_summary"
             android:persistent="false" />
 
-        <org.derpfest.support.preferences.SystemSettingSwitchPreference
-            android:key="disable_ripple_effect"
-            android:title="@string/disable_fingerprint_ripple_effect_title"
-            android:summary="@string/disable_fingerprint_ripple_effect_summary"
-            android:defaultValue="false" />
-
         <Preference
             android:key="android.theme.customization.lockscreen_clock_font"
             android:title="@string/theme_customization_lock_clock_title"
